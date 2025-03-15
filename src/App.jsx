@@ -6,12 +6,12 @@ import './App.css';
 function App() {
   // const [count, setCount] = useState(0);
   const [coupon, setCoupon] = useState(null);
-  useEffect(() => {
+  const getCoupon = () => {
     axios.post('http://localhost:3000/getCoupon').then((res) => {
       console.log(res.data);
-      // setCoupon(res.data);
+      setCoupon(res.data);
     });
-  }, []);
+  };
 
   return (
     <>
@@ -27,12 +27,9 @@ function App() {
         }`}>
         <div className='card-body text-start'>
           <h2 className='card-title'>{coupon?.title}</h2>
-          <p>{coupon?.time}</p>
+          {/* <p>{coupon?.time}</p> */}
           <p>{coupon?.id}</p>
           <p className='text-gray-400'>{coupon?.description}</p>
-          <div className='justify-end card-actions'>
-            <button className='btn btn-primary'>Buy Now</button>
-          </div>
         </div>
       </div>
 
@@ -49,14 +46,7 @@ function App() {
             confirmButtonText: 'Yes, Collect it!',
           }).then((result) => {
             if (result.isConfirmed) {
-              const newCoupon = {
-                time: new Date().toLocaleString(),
-                id: Math.random().toString(36).slice(2),
-                title: 'None of your business',
-                description:
-                  'You can only collect one coupon per hour. If you try to collect more than one coupon, it will not work.',
-              };
-              setCoupon(newCoupon);
+              getCoupon();
               Swal.fire({
                 title: 'Collected!',
                 text: 'Your coupon has been collected. You can use it now. Have a nice day! (you can only collect one coupon per hour)',
