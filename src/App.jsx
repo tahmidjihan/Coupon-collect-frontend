@@ -7,10 +7,12 @@ function App() {
   // const [count, setCount] = useState(0);
   const [coupon, setCoupon] = useState(null);
   const getCoupon = () => {
-    axios.post('http://localhost:3000/getCoupon').then((res) => {
-      console.log(res.data);
-      setCoupon(res.data);
-    });
+    axios
+      .post('https://coupon-collect-backend.vercel.app/getCoupon')
+      .then((res) => {
+        console.log(res.data);
+        setCoupon(res.data);
+      });
   };
 
   return (
